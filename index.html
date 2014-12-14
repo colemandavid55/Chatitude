@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My jQuery Page</title>
+    <script src="jquery-2.1.1.js">
+    </script>
+    <script src="handlebars-v2.0.0.js">
+    </script>
+</head>
+<body>
+  <script id="blog-post-template" type="text/x-handlebars-template">
+    <div class="blog-post">
+      <h4>{{ title }}</h4>
+      <p>{{ content }}</p>
+    </div>
+  </script>
+  <script type="text/javascript">
+    $.ajax({
+      type: 'GET',
+      url: 'http://chat.api.mks.io/chats'
+    }).success(function (chats) {
+      console.log("Got chats:", chats)
+    })
+    // grab the template
+    var source = $("#blog-post-template").html();
+    // Compile the template for Handlebars
+    var template = Handlebars.compile(source);
+    // Fill the template with data, we use the template as a function
+    var myNewHTML = template({
+      title: "This is my title",
+      content: "this is the content"
+    });
+    // Append it to the DOM
+    $('body').append(myNewHTML);
+
+  </script>
+</body>
+</html>
